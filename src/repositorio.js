@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-async function filtrarRepositorio(url) {
+async function filtro(url) {
     let result = await axios.get(url)
         const repos = result.data.map(r => {
             return {
@@ -12,4 +12,4 @@ async function filtrarRepositorio(url) {
         return repos
 }
 
-module.exports = {filtrarRepositorio}
+module.exports = {filtro}
