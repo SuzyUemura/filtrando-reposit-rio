@@ -28,7 +28,7 @@ function escreverRepositorio() {
     return new Promise(resolve => {
         filtrarRepositorio()
             .then(result => {
-                upload.criarArquivo(JSON.stringify(result), user)
+                upload.criarArquivo(JSON.stringify(result), usuario)
             })
         resolve()
     })
