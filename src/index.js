@@ -1,51 +1,29 @@
 const repositorio = require('./repositorio')
 const user = require('./user')
 const upload = require('./upload')
+const servicos = require('./servicos');
 
 const usuario = 'suzyUemura'
-const url = `https://api.github.com/users/${usuario}/repos?`
-const urlUser = `https://api.github.com/users/${usuario}`
 
-async function filtrarRepositorio() {
-    try {
-        return await repositorio.filtro(url)
-    }
-    catch (err) {
-        throw 'Erro ao filtrar repositório'
-    }
+async function main() {
+  servicos.getUser(usuario).then((result) => {
+    const usr = user.filtro(result.data);
+    upload.criarArquivo(usr, 'usuario');
+    console.log('Usuário filtrado com sucesso!');
+  }).catch((err) => {
+    console.log(`Erro ao filtrar Usuário: ${err}`);
+  });
+
+  servicos.getRepos(usuario).then((result) => {
+    const repos = repositorio.filtro(result.data);
+    upload.criarArquivo(repos, usuario);
+    console.log('Repositórios filtrados com sucesso!');
+  }).catch((err) => {
+    console.log(`Erro ao filtrar Repositórios: ${err}`);
+  });
 }
 
-async function filtrarUser() {
-    try {
-        return await user.filtro(urlUser)
-    } catch (error) {
-        throw 'Erro ao filtrar usuario'
-    }
-}
-
-function escreverRepositorio() {
-
-    return new Promise(resolve => {
-        filtrarRepositorio()
-            .then(result => {
-                upload.criarArquivo(JSON.stringify(result), usuario)
-            })
-        resolve()
-    })
-}
-
-function escreverUser() {
-    return new Promise(resolve => {
-        filtrarUser()
-            .then(result => {
-                upload.criarArquivo(JSON.stringify(result), 'usuario')
-            })
-        resolve() 
-    })
-}
-escreverRepositorio()
-escreverUser()
-
+main();
 
 
 

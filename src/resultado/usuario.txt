@@ -1,1 +1,0 @@
-[["login","SuzyUemura"],["id",69903170],["avatar_url","https://avatars.githubusercontent.com/u/69903170?v=4"]]
